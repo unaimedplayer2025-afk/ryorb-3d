@@ -1130,11 +1130,11 @@ let lastT = performance.now(), acc = 0, perfN = 0, perfSum = 0, fpsEl = null;
 if (Q.has('fps')) { fpsEl = document.createElement('div'); fpsEl.style.cssText = 'position:fixed;left:8px;bottom:8px;font:12px monospace;color:#0f0;z-index:9'; document.body.appendChild(fpsEl); }
 function loop(now) {
   requestAnimationFrame(loop);
-  let dt = Math.min(0.1, (now - lastT) / 1000); lastT = now; acc += dt;
+  const rawDt = Math.min(0.5, Math.max(0, (now - lastT) / 1000)); let dt = Math.min(0.1, rawDt); lastT = now; acc += dt;
   const STEP_DT = 1 / 60; let n = 0;
   while (acc >= STEP_DT && n < 6) { update(STEP_DT); acc -= STEP_DT; n++; }
   if (n === 6) acc = 0;
-  Snd.update(dt); updateHud(dt); updateFloats(dt); EraMusic.sync(); render();
+  Snd.update(rawDt); updateHud(dt); updateFloats(dt); EraMusic.sync(); render();
   // adaptive quality: drop bloom, then resolution, if we can't hold ~40fps
   if (G.mode === 'play') {
     perfSum += dt; perfN++;

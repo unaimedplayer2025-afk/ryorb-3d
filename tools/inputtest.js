@@ -21,7 +21,7 @@ const URL = process.argv[2] || 'http://localhost:8765/index.html';
   await t.goto(URL); await t.waitForTimeout(1200); await t.tap('#c'); await t.waitForTimeout(500);
   const tap1 = await t.evaluate(() => ({ mode: __dbg.G.mode, armed: __dbg.titleArmed, touchUI: document.body.classList.contains('touch') }));
   await t.tap('#c'); await t.waitForTimeout(400); const tap2 = await t.evaluate(() => __dbg.G.mode);
-  await t.tap('#bJump'); await t.waitForTimeout(120); const jy = await t.evaluate(() => +__dbg.hero.pos.y.toFixed(2));
+  await t.waitForTimeout(1500); await t.tap('#bJump'); await t.waitForTimeout(300); const jy = await t.evaluate(() => +__dbg.hero.pos.y.toFixed(2));
   await t.screenshot({ path: '/tmp/touch.png' });
   console.log('touch', JSON.stringify({ tap1, tap2, jy })); console.log('ERR', JSON.stringify(err)); await b.close();
 })();
